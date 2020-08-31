@@ -1,5 +1,0 @@
-import React from 'react'
-
-export const HomePageContainer = () => {
-  return <div>HomePage Container</div>
-}
