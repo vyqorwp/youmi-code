@@ -44,7 +44,7 @@ export class UserResolver {
       return {
         errors: [
           {
-            field: 'username too short',
+            field: 'userName',
             message: 'username should be longer than 3 letters',
           },
         ],
@@ -58,6 +58,16 @@ export class UserResolver {
     try {
       await em.persistAndFlush(user);
     } catch (err) {
+      if (err.detail.includes('already exists')) {
+        return {
+          errors: [
+            {
+              field: 'userName',
+              message: 'username already taken',
+            },
+          ],
+        };
+      }
       console.log('message', err.message);
     }
     return {user};
@@ -75,7 +85,7 @@ export class UserResolver {
       return {
         errors: [
           {
-            field: 'username',
+            field: 'userName',
             message: 'that user name dese not exist',
           },
         ],
